@@ -94,10 +94,8 @@ if(require.main == module) {
         .parse(process.argv);
 
     if ( program.url ) {
-        console.log( 'Processing input url:' + program.url );
         checkHtmlUrl(program.url, program.checks);
     } else {
-        console.log( 'Processing input file:' + program.file );
         var checkJson = checkHtmlFile(program.file, program.checks);
         var outJson = JSON.stringify(checkJson, null, 4);
         console.log(outJson);
