@@ -13,11 +13,25 @@ routereqsObj.routePaths();
 
 
 /* Postgres Connetivity Test - Provided by Heroku:DATABASE_URL */
-var DATABASE_URL = process.env.DATABASE_URL || 'postgres://fdcwrseeosglnf:JS3ZhyOH83pMIZHf0-POFrb93d@ec2-54-235-192-45.compute-1.amazonaws.com:5432/d9oosi2fk2le74';
+var pgconfig = process.env.DATABASE_URL;
 
-console.log( 'DATABASE_URL:' + DATABASE_URL );
+if ( !pgconfig ) {
+    /* Development */
+    pgconfig = {
+        host: 'ec2-54-235-192-45.compute-1.amazonaws.com',
+        port: 5432,
+        database: 'd9oosi2fk2le74',
+        user: 'fdcwrseeosglnf',
+        password: 'JS3ZhyOH83pMIZHf0-POFrb93d',
+        ssl: true
+    };
+    console.log( 'pg: pgconfig:' + JSON.stringify( pgconfig ) );
+} else {
+    /* Production on Heroku */
+    console.log( 'pg: DATABASE_URL:' + DATABASE_URL );
+}
 
-pg.connect(DATABASE_URL, function(err, client) {
+pg.connect(pgconfig, function(err, client) {
 
     if ( err ) {
         console.log( 'pg:' + err );
