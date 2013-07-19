@@ -6,7 +6,10 @@ var routereqs = require('./routereqs');
 var pg = require('pg');
 
 
+/* Static files */
+app.use(express.static(__dirname + '/public'));
 /* Setup HTTP URI handlers */
+
 
 var routereqsObj = new routereqs(app);
 routereqsObj.routePaths();
@@ -43,6 +46,8 @@ pg.connect(pgconfig, function(err, client) {
     }
 
 });
+
+
 
 /* 
  * Server Listens on:

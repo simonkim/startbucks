@@ -23,17 +23,28 @@ routereqs.prototype.sendFile = function(response, filename, text) {
 };
 
 routereqs.prototype.routePaths = function() {
-
     var self = this;
     /* / -> public/index.html */
+    /*
     self.expressApp.get('/', function(request, response) {
         self.sendFile( response, 'index.html', true );
     });
 
+    self.expressApp.get('/:file', function(request, response) {
+        self.sendFile( response, request.params.file, true );
+    });
+
+    self.expressApp.get('/js/:file', function(request, response) {
+        self.sendFile( response, 'js/' + request.params.file, true );
+    });
+    */
+
     /* http:/images/:file -> fs:images/:file */
+    /*
     self.expressApp.get('/images/:file', function(request, response) {
         self.sendFile( response, 'images/' + request.params.file, false );
     });
+    */
 };
 
 
