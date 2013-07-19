@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app>
   <head>
     <meta charset="utf-8">
     <title>Project Showcase | Saturday Startbucks</title>
@@ -12,6 +12,10 @@
     <link href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800" 
         rel="stylesheet" type="text/css">
+
+    <!-- Angular.js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="js/projectctrl.js"></script>
 
     <style type="text/css">
         /* Large desktop */
@@ -151,70 +155,31 @@
         </div>
     </div>
 
-
+<div ng-controller="ProjectsCtrl">
     <!-- Marketing copy begins -->
-    <div class="row-fluid section1 ">
+    <div class="row-fluid section1" ng-repeat="project in projects">
         <div class="span4 offset1 asset">
-            <!-- Field: Thumbnail Image -->
-            <img class="img-polaroid" src="http://placehold.it/240x240">
+            <img class="img-polaroid" src="{{project.thumbnailUrl}}">
         </div>
         <div class="span7 copy">
-                <h3> 
-                    <!-- Field: Project Name-->
-                    Project #1 
-                </h3>
-                <p> 
-                    <!-- Field: Project Name-->
-                Project Description
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta, dui sagittis hendrerit rutrum, nunc leo tempus nisl, eu mollis justo velit at nunc. Fusce nec egestas sem. Donec fringilla ante lectus, a pellentesque lacus dignissim ac. Sed volutpat lorem ut congue malesuada. 
-                </p>
+                <a href="{{project.url}}">
+                <h3> {{project.name}} </h3>
+                </a>
+                <p> {{project.description}} </p>
                 <p>
                 <b>Author:</b> 
-                <em>
-                    <!-- Field: Author Name -->
-                    Author Name 
-                </em>
+                <em>{{project.author}} </em>
                 </p>
                 <p>
-                    <!-- Field: URL to Twitter -->
-                <a href="#" class="btn btn-twitter"><i class="icon-twitter"></i>
-                    <!-- Field: Twitter ID-->
-                    | @twitter 
-                </a>
-                    <!-- Field: URL to Facebook -->
-                <a href="#" class="btn btn-facebook"><i class="icon-facebook"></i>
-                    <!-- Field: Facebook ID-->
-                    | author.name 
-                </a>
-                <a href="https://github.com/simonkim/startbucks" class="btn btn-github"><i class="icon-github"></i> | github</a> 
+                    <a href="https://twitter.com/{{project.twitter}}" class="btn btn-twitter"><i class="icon-twitter"></i> | @{{project.twitter}} </a>
+                    <a href="https://www.facebook.com/{{project.facebook}}" class="btn btn-facebook"><i class="icon-facebook"></i> | {{project.facebook}} </a>
+                    <a href="https://github.com/{{project.github}}" class="btn btn-github"><i class="icon-github"></i> | github</a> 
                 </p>
         </div>
     </div>
 
-    <!-- Sample preview for the case when we have only 2 projects -->
-    <div class="row-fluid section1 ">
-        <div class="span4 offset1 asset">
-            <img class="img-polaroid" src="http://placehold.it/240x240">
-        </div>
-        <div class="span7 copy">
-                <h3> 
-                    Project #2 
-                </h3>
-                <p> 
-                Project Description
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta, dui sagittis hendrerit rutrum, nunc leo tempus nisl, eu mollis justo velit at nunc. Fusce nec egestas sem. Donec fringilla ante lectus, a pellentesque lacus dignissim ac. Sed volutpat lorem ut congue malesuada. 
-                </p>
-                <p>
-                <b>Author:</b> 
-                <em> Author Name </em>
-                </p>
-                <p>
-                <a href="#" class="btn btn-twitter"><i class="icon-twitter"></i> | @twitter </a>
-                <a href="#" class="btn btn-facebook"><i class="icon-facebook"></i> | author.name </a>
-                <a href="https://github.com/simonkim/startbucks" class="btn btn-github"><i class="icon-github"></i> | github</a> 
-                </p>
-        </div>
-    </div>
+</div>
+
 
     <div class="row-fluid faq">
         <div class="span10 offset1">
