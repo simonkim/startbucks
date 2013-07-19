@@ -28,7 +28,7 @@ if ( !pgconfig ) {
     console.log( 'pg: pgconfig:' + JSON.stringify( pgconfig ) );
 } else {
     /* Production on Heroku */
-    console.log( 'pg: DATABASE_URL:' + DATABASE_URL );
+    console.log( 'pg: DATABASE_URL:' + pgconfig );
 }
 
 pg.connect(pgconfig, function(err, client) {
