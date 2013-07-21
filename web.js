@@ -8,6 +8,14 @@ app.use(express.static(__dirname + '/public'));
 
 /* REST API begins from this humble code */
 app.get( '/rest/projects', function(req, res) {
+
+    /* Log */
+    var pathlogs = 'public/log/access.log';
+    fs.appendFile( pathlogs, req.path + ' - ' + req.ip + ' - ' + req.host + '\n', function(err) {
+        if ( err ) {
+            console.log ( 'failed adding access log to ' + pathlogs );
+        }
+    });
     var pg = require('pg');
 
     /* Production: Heroku */
