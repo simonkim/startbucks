@@ -1,1 +1,1 @@
-세러데이스벅 멤버들의 Startup Engineering 프로젝트를 소개합니다.
+Introducing Corsera's <a href="https://class.coursera.org/startup-001/">Stanford Startup Engineering</a> Projects <br>- <em>Meet-up in Seoul, Korea</em>
