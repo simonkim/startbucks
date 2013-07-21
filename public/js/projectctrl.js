@@ -3,10 +3,7 @@ var projects = [];
 
 function ProjectsCtrl($scope, $http) {
     $http.get('/rest/projects').success(function(data) {
-        console.log( 'data:' + data );
-        for( var i = 0; i < data.length; i++ ) {
-            console.log( 'data[' + i + ']:' + JSON.stringify(data[i]) );
-        }
+        console.log( 'loaded projects:' + data.length );
         $scope.projects = data;
     });
 
