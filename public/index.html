@@ -150,7 +150,7 @@
     <!-- Angular.js template for Project List -->
     <div class="row-fluid section1" ng-repeat="project in projects">
         <div class="span4 offset1 asset">
-            <img class="img-polaroid" src="{{project.thumbnailurl}}">
+            <img class="img-polaroid" ng-src="{{project.thumbnailurl}}">
         </div>
         <div class="span6 copy">
                 <a href="{{project.url}}">
