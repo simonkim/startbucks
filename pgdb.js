@@ -9,6 +9,11 @@
  *  }
  */
 
+/* NOT STABLE: unused until we find a fix
+ * - pg.connect(...) never returns (often)
+ * - client.query() never returns (often)
+ */
+
 var pg = require('pg');
 var fs = require('fs');
 
@@ -117,7 +122,7 @@ exports.rest_get = function( data, callback ) {
         return;
     }
 
-    console.log( 'pgdb: rest_get(): data=\'' + data + '\'');
+    console.log( 'pgdb: rest_get(): data=\'' + data + '\', connecting ...');
 
     pg.connect( pgdb_pgconfig, function( err, client, done ) {
         if ( err ) {

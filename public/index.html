@@ -151,16 +151,16 @@
     </div>
 
 <div ng-controller="ProjectsCtrl">
-    <!-- Marketing copy begins -->
+    <!-- Angular.js template for Project List -->
     <div class="row-fluid section1" ng-repeat="project in projects">
         <div class="span4 offset1 asset">
-            <img class="img-polaroid" src="{{project.thumbnailUrl}}">
+            <img class="img-polaroid" src="{{project.thumbnailurl}}">
         </div>
-        <div class="span7 copy">
+        <div class="span6 copy">
                 <a href="{{project.url}}">
                 <h3> {{project.name}} </h3>
                 </a>
-                <p> {{project.description}} </p>
+                <p> {{project.descr}} </p>
                 <p>
                 <b>Author:</b> 
                 <em>{{project.author}} </em>

@@ -2,34 +2,27 @@ var express = require('express');
 
 var app = express.createServer(express.logger());
 var fs = require('fs');
-var pgdb = require('./pgdb.js');
-
 
 /* Static files */
 app.use(express.static(__dirname + '/public'));
 
-function pgdb_ensure_init( callback ) {
-/* Database: postgress */
-    if ( pgdb.initialized() ) {
-        callback(); 
-    } else {
-        pgdb.init( process.env.DATABASE_URL, function() {
-            pgdb.initdb( callback );
-        });
-    }
-     
-};
-
+/* REST API begins from this humble code */
 app.get( '/rest/projects', function(req, res) {
-    pgdb_ensure_init( function() {
-        pgdb.rest_get( 'projects', function( err, rows ) {
-            if ( rows ) {
-                res.send( rows );
-            } else if ( err ) {
-                res.send( err );
-            } else {
-                res.send( 'Unknown error' );
-            }
+    var pg = require('pg');
+
+    /* Production: Heroku */
+    var conncfg = process.env.DATABASE_URL;
+    if ( !conncfg ) {
+        /* Development: conf/pgconfig_dev.json */
+        var path_pgconfig = './conf/pgconfig_dev.json';
+        var buf = fs.readFileSync( path_pgconfig );
+        conncfg = JSON.parse( buf );
+    }
+
+    pg.connect(conncfg, function(err, client, done) {
+        client.query('SELECT * FROM projects', function(err, result) {
+            res.send( result.rows );
+            if ( done ) done();
         });
     });
 });

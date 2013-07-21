@@ -1,35 +1,15 @@
 /* Angular.js, ProjectsCtrl class */
-function ProjectsCtrl($scope) {
-    $scope.projects = [
-        {name:'Code for Kids', 
-            url:'http://code4kids.herokuapp.com',
-            thumbnailUrl: 'http://www.ok.gov/kids/images/code_kids.jpg',
-            description: 'Get learners totally and actively involved from start to finish as creators of their own knowledge and skill. Trainers, then, are no longer information shovelers but orchestrators of a total environment where learners happily do most of the work.',
-            author: 'Taewony Kim',
-            twitter: '',
-            facebook: '',
-            github: ''
-        },
-        {name:'Distributed Book Cross Network', 
-            url:'http://bookx.herokuapp.com',
-            thumbnailUrl: 'http://bookx.herokuapp.com/images/reading.jpg',
-            description: 'You can manage all of your books in your shelf quite ease, just by snapshot of barcode, QRcode, ISBN number. We will provide the online version of management software before launch.',
-            author: 'Nolboo Kim',
-            twitter: '',
-            facebook: '',
-            github: ''
-        },
-        {name:'Short Stories', 
-            url:'http://storyshort.heroku.com',
-            thumbnailUrl: 'http://storyshort.herokuapp.com/images/edit_4x3.jpg',
-            description: 'Share Photo Rich Short Stories on Smartphones. You already have a short story to share with your friends or family. A few beautiful photos taken while on a trip, or at an awesome dining. Your story texts deserve rich styling.',
-            author: 'Simon Kim',
-            twitter: 'kaoma',
-            facebook: 'kaoma.net',
-            github: 'simonkim/bitstarter'
-            }
-    ];
-       
+var projects = [];
+
+function ProjectsCtrl($scope, $http) {
+    $http.get('/rest/projects').success(function(data) {
+        console.log( 'data:' + data );
+        for( var i = 0; i < data.length; i++ ) {
+            console.log( 'data[' + i + ']:' + JSON.stringify(data[i]) );
+        }
+        $scope.projects = data;
+    });
+
     /*
     $scope.addProject = function() {
         $scope.projects.push({name:$scope.projectName, url:false});
@@ -57,3 +37,5 @@ function ProjectsCtrl($scope) {
         */
     };
 }
+
+ProjectsCtrl.$inject = ['$scope', '$http'];
