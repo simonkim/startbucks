@@ -1,0 +1,48 @@
+<div class="row-fluid">
+    <div class="span10 offset1">
+        <form class="form-horizontal" ng-submit="addLink()">
+                <legend>Product Registration</legend>
+                <div class="control-group">
+                    <label class="control-label" for="title">Title</label>
+                    <div class="controls">
+                        <input type="text" ng-model="title" id="title" placeholder="Name of your Project or Product">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="descr"> Description</label>
+                    <div class="controls">
+                        <textarea rows=6 id="descr" ng-model="descr"> 
+                        </textarea>
+                        <img ng-src="{{img}}" style="max-width:160px;">
+                        <span class="help-block">Describe your product briefly</span>
+
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="url">Project URL</label>
+                        <div class="controls">                    
+                        <input ng-model="newlink" type="text" ng-model="projectURL" placeholder="http://storyshort.heroku.com" id="url">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="img">Image URL</label>
+                    <div class="controls">
+
+                        <input type="text" ng-model="img" placeholder="http://storyshort.heroku.com/main.jpg" id="img">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                    <a class="btn" href="#/"> Cancel </a>
+                    <input class="btn btn-primary" aria-hidden="true" type="submit" value="Submit" >
+                    </div>
+                </div>
+
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,37 @@
+
+<!-- Guide to submit a project -->
+<div class="row-fluid submit">
+    <div class="span6 offset5">
+    <h3>Have an awesome project? Submit now! </h3>
+    <form class="form-inline" >
+        <fieldset>
+            <label> Project URL </label>
+            <input ng-model="newlink" type="text" name="url"  
+            placeholder="URL Address to the Product Site">{{ newlink | arg_reglink_url }}</input> 
+            <a class="btn" href="#/reglink"> Submit</a>
+        </fieldset>
+    </form>
+    </div>
+</div>
+
+    <!-- Angular.js template for Project List -->
+    <div class="row-fluid section1" ng-repeat="project in projects">
+        <div class="span4 offset1 asset">
+            <img class="img-polaroid" ng-src="{{project.thumbnailurl}}">
+        </div>
+        <div class="span6 copy">
+                <a href="/redir?url={{project.url}}&id={{project.id}}">
+                <h3> {{project.name}} </h3>
+                </a>
+                <p> {{project.descr}} </p>
+                <p>
+                <p>
+                    <a href="#" class="btn disabled"><i class="icon-star"></i> | Like </a>
+                    <a href="#" class="btn disabled"><i class="icon-comment"></i> | Comment </a>
+                    <!--a href="#/projects/{{project.id}}" class="btn" > Edit <i class="icon-edit"></i></a-->
+                    <a href="/redir?url={{project.url}}" class="btn btn-success" > View <i class="icon-chevron-right"></i></a>
+
+                </p>
+        </div>
+    </div>
+

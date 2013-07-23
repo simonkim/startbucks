@@ -2,38 +2,34 @@ var express = require('express');
 
 var app = express.createServer(express.logger());
 var fs = require('fs');
+var restapi = require('./rest');
+var urlutil = require('./urlutil');
+var appconfig = require('./appconfig');
 
-/* Static files */
+
+/* App Configuration */
+var pgconfig = appconfig.pgconfig();
+
+/* Express Configuration
+ * - static routes: /public
+ * - POST BODY parser
+ * - Cookie Parser
+ */
 app.use(express.static(__dirname + '/public'));
+app.use(express.bodyParser());
+app.use(express.cookieParser());
 
-/* REST API begins from this humble code */
-app.get( '/rest/projects', function(req, res) {
+/* REST routes 
+ *  - /rest/projects
+ *      - GET
+ *      - POST
+ */
+restapi.init_routes( app, pgconfig );
 
-    /* Log */
-    var pathlogs = 'public/log/access.log';
-    fs.appendFile( pathlogs, req.path + ' - ' + req.socket.remoteAddress + '\n', function(err) {
-        if ( err ) {
-            console.log ( 'failed adding access log to ' + pathlogs );
-        }
-    });
-    var pg = require('pg');
-
-    /* Production: Heroku */
-    var conncfg = process.env.DATABASE_URL;
-    if ( !conncfg ) {
-        /* Development: conf/pgconfig_dev.json */
-        var path_pgconfig = './conf/pgconfig_dev.json';
-        var buf = fs.readFileSync( path_pgconfig );
-        conncfg = JSON.parse( buf );
-    }
-
-    pg.connect(conncfg, function(err, client, done) {
-        client.query('SELECT * FROM projects', function(err, result) {
-            res.send( result.rows );
-            if ( done ) done();
-        });
-    });
-});
+/* URL related routes
+ * -GET /verifylink?url=
+ */
+urlutil.init_routes( app, pgconfig );
 
 /* 
  * Server Listens on:

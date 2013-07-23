@@ -1,0 +1,118 @@
+/* Angular.js, ProjectsCtrl class */
+var projects = [];
+
+function ProjectsCtrl($scope, $http) {
+    $http.get('/rest/projects').success(function(data) {
+        console.log( 'loaded projects:' + data.length );
+        $scope.projects = data;
+    });
+
+    $scope.addProject = function() {
+        /*
+         * projectURL, projectName, projectImageURL, projectDescr
+         */
+        /* $scope.projects.push({name:$scope.projectName, url:false}); */
+        $scope.projectName = '';
+        $scope.projectURL = '';
+        $scope.projectImageURL = '';
+        $scope.projectDescr = '';
+        var newProject = { 
+            name: $scope.projectName,
+            url: $scope.projectURL,
+            thumbnailurl: $scope.projectImageURL,
+            descr: $scope.projectDescr
+        };
+        console.log( 'Saving New Project:' + JSONG.stringify( newProject) );
+    };
+         
+    /*
+    $scope.remaining = function() {
+        var count = 0;
+        angular.forEach($scope.projects, function(todo) {
+            count++;
+        });
+        return count;
+    };
+    */
+           
+    $scope.archive = function() {
+        /*
+        var oldTodos = $scope.projects;
+        $scope.projects = [];
+        angular.forEach(oldTodos, function(todo) {
+            if (!todo.done) $scope.projects.push(todo);
+        });
+        */
+    };
+}
+
+ProjectsCtrl.$inject = ['$scope', '$http'];
+
+function ProjectDetailCtrl($scope, $routeParams) {
+    $scope.projectId = $routeParams.projectId;
+}
+
+ProjectDetailCtrl.$inject = ['$scope', '$routeParams'];
+
+function checkURL(value) { return /^(http...)/.test(value) }
+
+function NewLinkCtrl($scope, $http, $location, arg_reglink) {
+    $scope.newlink = arg_reglink.url;
+    console.log( 'newlink:' + arg_reglink.url );
+
+    $scope.descr = "";
+    $scope.title = "";
+    $scope.img = "/images/loading.gif";
+
+    if ( $scope.newlink && $scope.newlink.length > 0 && !checkURL($scope.newlink) ) {
+        $scope.newlink = 'http://' + $scope.newlink;
+    }
+    $http.get('/verifylink?url=' + $scope.newlink).success(function(data) {
+        console.log( 'loaded projects:' + data.length );
+        $scope.title = data.title;
+        $scope.descr = data.descr;
+        $scope.img = data.img;
+        if ( $scope.img && $scope.img.length > 0 && !checkURL($scope.img)) {
+            var delimiter ='';
+            if ( $scope.newlink.substring( $scope.newlink.length - 1) != '/') {
+                delimiter = '/';
+            } 
+            $scope.img = $scope.newlink + delimiter + $scope.img;
+        }
+    }).error(function(data, status, headers, config) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+        $scope.img = '';    /* stop loading animation */
+
+        /* TODO: alert */
+    });
+
+    $scope.addLink = function() {
+        /*
+         * projectURL, projectName, projectImageURL, projectDescr
+         */
+
+         if ( $scope.title && $scope.title.length > 0 && $scope.newlink && $scope.newlink.length > 0 &&
+            $scope.img && $scope.img.length > 0 && $scope.descr && $scope.descr.length > 0) {
+            var newLink = { 
+                name: $scope.title,
+                url: $scope.newlink,
+                thumbnailurl: $scope.img,
+                descr: $scope.descr
+            };
+
+            console.log( 'POST /rest/projects:'+ JSON.stringify( newLink) );
+            $http.post('/rest/projects', newLink).success(function(data) {
+
+                /* Redirect to project list when it's done */
+                $location.path('/');
+            }).error(function(data, status) {
+                /* Failed saving with: status */
+
+            });
+         }
+    };    
+}
+
+
+NewLinkCtrl.$inject = ['$scope', '$http', '$location', 'arg_reglink'];
