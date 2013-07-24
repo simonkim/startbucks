@@ -2,13 +2,13 @@
 <!-- Guide to submit a project -->
 <div class="row-fluid submit">
     <div class="span6 offset5">
-    <h3>Have an awesome project? Submit now! </h3>
+    <h3>Have an awesome project? Show Off and Get More Visitors! </h3>
     <form class="form-inline" >
         <fieldset>
-            <label> Project URL </label>
-            <input ng-model="newlink" type="text" name="url"  
-            placeholder="URL Address to the Product Site">{{ newlink | arg_reglink_url }}</input> 
-            <a class="btn" href="#/reglink"> Submit</a>
+            <label class="control-label" for="url"> Project URL </label>
+            <input ng-model="newlink" type="text" name="url"  id="url"
+            placeholder="Address to Project Site">{{ newlink | arg_reglink_url }}</input> 
+            <a class="btn" href="#/reglink">Submit</a>
         </fieldset>
     </form>
     </div>
