@@ -87,7 +87,42 @@ exports.increase_score = function(id, scoredelta, callback) {
 		callback(err);
 	});
 };
+var rest_projects_get = function(req, res) {
+	    pg.connect(pgconfig, function(err, client, done) {
+	        if ( client) {
 
+		        var text = 'SELECT * FROM projects ';
+		        var values = null;
+		        var sql;
+
+	        	if ( req.params.id ) {
+	        		text += ' WHERE id=$1 ';
+	        		values = [req.params.id];
+	        	}
+
+		        text += 'ORDER BY score DESC, date_added DESC';
+
+		        if ( values ) {
+	        		sql = {text:text, values:values};
+		        } else{
+		        	sql = text;
+		        }
+		        console.log( 'sql:' + JSON.stringify( sql ));
+
+
+	            client.query(sql, function(err, result) {
+	            	if ( result ) {
+		                res.send( result.rows );
+	            	} else {
+	            		res.status(400).send( err );
+	            	}
+	                if ( done ) done();
+	            });
+	        } else {
+	            console.log( 'pg:' + err );
+	        }
+	    });
+	};
 /* Public interfaces */
 exports.init_routes = function(app, pgconf) {
 	pgconfig = pgconf;
@@ -97,18 +132,8 @@ exports.init_routes = function(app, pgconf) {
 	});	
 
 	/* GET /rest/projects */
-	app.get( '/rest/projects', function(req, res) {
-	    pg.connect(pgconfig, function(err, client, done) {
-	        if ( client) {
-	            client.query('SELECT * FROM projects ORDER BY score DESC, date_added DESC', function(err, result) {
-	                res.send( result.rows );
-	                if ( done ) done();
-	            });
-	        } else {
-	            console.log( 'pg:' + err );
-	        }
-	    });
-	});
+	app.get( '/rest/projects', rest_projects_get );
+	app.get( '/rest/projects/:id', rest_projects_get );
 
 	app.post( '/rest/projects', function(req, res) {
 		/* params: name, url, thumbnailurl, descr */

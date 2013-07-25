@@ -2,6 +2,10 @@
 var projects = [];
 
 function ProjectsCtrl($scope, $http) {
+    $scope.location_href = window.location.href;
+    var fbcomments = '<div class="fb-comments" data-href="' + $scope.location_href + '" data-width="800" data-num-posts="10"></div>';
+    document.getElementById('fb-comments').innerHTML = fbcomments;
+    
     $http.get('/rest/projects').success(function(data) {
         console.log( 'loaded projects:' + data.length );
         $scope.projects = data;
@@ -24,35 +28,25 @@ function ProjectsCtrl($scope, $http) {
         };
         console.log( 'Saving New Project:' + JSONG.stringify( newProject) );
     };
-         
-    /*
-    $scope.remaining = function() {
-        var count = 0;
-        angular.forEach($scope.projects, function(todo) {
-            count++;
-        });
-        return count;
-    };
-    */
-           
-    $scope.archive = function() {
-        /*
-        var oldTodos = $scope.projects;
-        $scope.projects = [];
-        angular.forEach(oldTodos, function(todo) {
-            if (!todo.done) $scope.projects.push(todo);
-        });
-        */
-    };
 }
 
 ProjectsCtrl.$inject = ['$scope', '$http'];
 
-function ProjectDetailCtrl($scope, $routeParams) {
+function ProjectDetailCtrl($scope, $routeParams, $http) {
+    $scope.location_href = window.location.href;
+    var fbcomments = '<div class="fb-comments" data-href="' + $scope.location_href + '" data-width="800" data-num-posts="10"></div>';
+    document.getElementById('fb-comments').innerHTML = fbcomments;
+
     $scope.projectId = $routeParams.projectId;
+    $http.get('/rest/projects/' + $routeParams.projectId).success(function(data) {
+        console.log( 'loaded projects:' + data.length );
+        if ( data.length > 0 ) {
+            $scope.project = data[0];
+        }
+    });
 }
 
-ProjectDetailCtrl.$inject = ['$scope', '$routeParams'];
+ProjectDetailCtrl.$inject = ['$scope', '$routeParams', '$http'];
 
 function checkURL(value) { return /^(http...)/.test(value) }
 
