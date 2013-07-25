@@ -8,7 +8,8 @@ var urlutil = require('./urlutil');
 
 function log_access(req) {
 	var pathlogs = 'public/log/access.log';
-	fs.appendFile( pathlogs, req.method + ' ' + req.path + ' - ' + req.socket.remoteAddress + '\n', function(err) {
+    var date = new Date();
+	fs.appendFile( pathlogs, req.method + ' ' + req.path + ' - ' + JSON.stringify(req.query) + ' - ' + req.socket.remoteAddress + ' - ' + req.get('X-Forwarded-For') + ' - ' + req.get('Referrer') + ' - ' + date.toUTCString() + '\n', function(err) {
 		if ( err ) {
 	    	console.log ( 'failed adding access log to ' + pathlogs );
 	    }
