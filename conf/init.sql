@@ -5,5 +5,6 @@ CREATE TABLE projects (
     urlhash text NOT NULL,
     thumbnailUrl text NOT NULL,
     descr text NOT NULL,
-    date_added timestamp default NULL
+    date_added timestamp default NULL,
+    score integer not null
 );

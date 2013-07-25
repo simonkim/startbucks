@@ -10,6 +10,7 @@
 var rest = require('restler');
 var cheerio = require('cheerio');
 var url = require('url');
+var restapi = require('./rest')
 
 exports.init_routes = function( app, pgconfig ) {
 	/* Verify link URL and redirect to Registration Form (/form/newlink)
@@ -44,9 +45,14 @@ exports.init_routes = function( app, pgconfig ) {
 
     app.get( '/redir', function(req, res) {
         
-        /* TODO: catch the click to the link */
+        if ( req.query.id && req.query.url ) {
+            restapi.increase_score( req.query.id, 1, function(err, result) {
 
-        res.redirect(req.query.url);
+            });
+            res.redirect(req.query.url);
+        } else {
+            res.redirect('/');
+        }
     });    
 };
 
@@ -137,7 +143,6 @@ exports.extractMetaFromHTML = function(content, callback) {
     var siteinfo = {};
     console.log( 'title:' + $('title').text() );
     console.log( 'h1:' + $('h1').text() );
-    console.log( 'p:' + $('p').text() );
     console.log( 'img:' + $('img').attr('src') );
 
     var pcand = null;
@@ -154,7 +159,6 @@ exports.extractMetaFromHTML = function(content, callback) {
                 pcand = p;
             }
         }
-        console.log( 'p[' + i + ']:' + p );
     });
     if ( pcand ) { 
         pcand = pcand.trim().substring(0, 200);
