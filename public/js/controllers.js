@@ -4,13 +4,7 @@ var projects = [];
 function ProjectsCtrl($scope, $http) {
     /* Update Facebook Comments Box */
     $scope.location_href = window.location.href;
-    //var href = window.location.href;
-    var href = 'http://staging-startbucks.herokuapp.com';
-    //var fbcomments ='<script type="text/javascript" src="js/fbsdk.js"> </script>';
-    var fbcomments = '<div class="fb-comments" data-href="' + href + '" data-width="800" data-num-posts="10"></div>';
-    //$('#fb-root').html('');
-    $('#fb-comments').html(fbcomments);
-    FB.XFBML.parse(document.getElementById('fb-comments'));
+    update_fbcomments();
     
     $http.get('/rest/projects').success(function(data) {
         console.log( 'loaded projects:' + data.length );
@@ -41,8 +35,7 @@ ProjectsCtrl.$inject = ['$scope', '$http'];
 function ProjectDetailCtrl($scope, $routeParams, $http) {
     /* Update Facebook Comments Box */
     $scope.location_href = window.location.href;
-    //var fbcomments = '<div class="fb-comments" data-href="' + window.location.href + '" data-width="800" data-num-posts="10"></div>';
-    //$('#fb-comments').html(fbcomments);
+    update_fbcomments();
 
     $scope.projectId = $routeParams.projectId;
     $http.get('/rest/projects/' + $routeParams.projectId).success(function(data) {
