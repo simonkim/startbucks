@@ -6,6 +6,7 @@ function ProjectsCtrl($scope, $http) {
     $scope.location_href = window.location.href;
     update_fbcomments();
     update_twbutton();
+    $('title').text(' Startup Projects | Saturday Startbucks');
     
     $http.get('/rest/projects').success(function(data) {
         console.log( 'loaded projects:' + data.length );
@@ -44,6 +45,7 @@ function ProjectDetailCtrl($scope, $routeParams, $http) {
         console.log( 'loaded projects:' + data.length );
         if ( data.length > 0 ) {
             $scope.project = data[0];
+            $('title').text(data[0].name + ' | Saturday Startbucks');
         }
     });
 }
