@@ -49,8 +49,8 @@ function update_fbcomments()
 
 function update_twbutton()
 {
-    //var href = encodeURIComponent(window.location.href);
-    var href = encodeURIComponent('http://staging-startbucks.herokuapp.com/#/projects/2');
+    var href = encodeURIComponent(window.location.href);
+    //var href = encodeURIComponent('http://staging-startbucks.herokuapp.com/#/projects/2');
     var twbutton ='<iframe allowtransparency="true" frameborder="0" scrolling="no"' +
     ' src="https://platform.twitter.com/widgets/tweet_button.html' + 
     '?url=' + href + 
