@@ -1,13 +1,13 @@
 var showcaseAppModule = angular.module('showcase', []).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.
-            when('/projects', {templateUrl: 'templates/project-list.html', 
+            when('/', {templateUrl: 'templates/project-list.html', 
                 controller: ProjectsCtrl}).
             when('/projects/:projectId', {templateUrl: 'templates/project-detail.html', 
                 controller: ProjectDetailCtrl}).
             when('/reglink', {templateUrl: 'templates/project-reglink.html', 
                 controller: NewLinkCtrl}).
-            otherwise({redirectTo: '/projects'});
+            otherwise({redirectTo: '/'});
     }]);
 
 var arg_reglink_url = '';

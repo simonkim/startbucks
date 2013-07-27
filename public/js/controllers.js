@@ -2,9 +2,10 @@
 var projects = [];
 
 function ProjectsCtrl($scope, $http) {
+    /* Update Facebook Comments Box */
     $scope.location_href = window.location.href;
     var fbcomments = '<div class="fb-comments" data-href="' + $scope.location_href + '" data-width="800" data-num-posts="10"></div>';
-    document.getElementById('fb-comments').innerHTML = fbcomments;
+    $('#fb-comments').html(fbcomments);
     
     $http.get('/rest/projects').success(function(data) {
         console.log( 'loaded projects:' + data.length );
@@ -33,9 +34,10 @@ function ProjectsCtrl($scope, $http) {
 ProjectsCtrl.$inject = ['$scope', '$http'];
 
 function ProjectDetailCtrl($scope, $routeParams, $http) {
+    /* Update Facebook Comments Box */
     $scope.location_href = window.location.href;
     var fbcomments = '<div class="fb-comments" data-href="' + $scope.location_href + '" data-width="800" data-num-posts="10"></div>';
-    document.getElementById('fb-comments').innerHTML = fbcomments;
+    $('#fb-comments').html(fbcomments);
 
     $scope.projectId = $routeParams.projectId;
     $http.get('/rest/projects/' + $routeParams.projectId).success(function(data) {
