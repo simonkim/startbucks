@@ -49,9 +49,13 @@ function update_fbcomments()
 
 function update_twbutton()
 {
-    //var twbutton = '<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>';
+    //var href = encodeURIComponent(window.location.href);
+    var href = encodeURIComponent('http://staging-startbucks.herokuapp.com/#/projects/2');
     var twbutton ='<iframe allowtransparency="true" frameborder="0" scrolling="no"' +
-    ' src="https://platform.twitter.com/widgets/tweet_button.html' + '?url=' + window.location.href + '"' +
+    ' src="https://platform.twitter.com/widgets/tweet_button.html' + 
+    '?url=' + href + 
+    '&text=' + document.title + 
+    '"' +
     ' style="width:130px; height:20px;"></iframe>';
     $('#twbutton').html( twbutton );
 }

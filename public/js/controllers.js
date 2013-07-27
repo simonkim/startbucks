@@ -5,8 +5,8 @@ function ProjectsCtrl($scope, $http) {
     /* Update Facebook Comments Box */
     $scope.location_href = window.location.href;
     update_fbcomments();
-    update_twbutton();
     $('title').text(' Startup Projects | Saturday Startbucks');
+    update_twbutton();
     
     $http.get('/rest/projects').success(function(data) {
         console.log( 'loaded projects:' + data.length );
@@ -38,7 +38,6 @@ function ProjectDetailCtrl($scope, $routeParams, $http) {
     /* Update Facebook Comments Box */
     $scope.location_href = window.location.href;
     update_fbcomments();
-    update_twbutton();
 
     $scope.projectId = $routeParams.projectId;
     $http.get('/rest/projects/' + $routeParams.projectId).success(function(data) {
@@ -46,6 +45,7 @@ function ProjectDetailCtrl($scope, $routeParams, $http) {
         if ( data.length > 0 ) {
             $scope.project = data[0];
             $('title').text(data[0].name + ' | Saturday Startbucks');
+            update_twbutton();
         }
     });
 }
