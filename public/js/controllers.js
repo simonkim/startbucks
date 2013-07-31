@@ -8,7 +8,7 @@ function ProjectsCtrl($scope, $http) {
     $('title').text(' Startup Projects | Saturday Startbucks');
     update_twbutton();
     
-    $http.get('/rest/projects').success(function(data) {
+    $http.get('/rest/projects/category/project').success(function(data) {
         console.log( 'loaded projects:' + data.length );
         $scope.projects = data;
     });
@@ -96,7 +96,8 @@ function NewLinkCtrl($scope, $http, $location, arg_reglink) {
                 name: $scope.title,
                 url: $scope.newlink,
                 thumbnailurl: $scope.img,
-                descr: $scope.descr
+                descr: $scope.descr,
+                category: 'project'
             };
 
             console.log( 'POST /rest/projects:'+ JSON.stringify( newLink) );
