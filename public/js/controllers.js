@@ -1,14 +1,18 @@
 /* Angular.js, ProjectsCtrl class */
 var projects = [];
 
-function ProjectsCtrl($scope, $http) {
+function ProjectsCtrl($scope, $routeParams, $http) {
     /* Update Facebook Comments Box */
     $scope.location_href = window.location.href;
     update_fbcomments();
     $('title').text(' Startup Projects | Saturday Startbucks');
     update_twbutton();
+    $scope.category = $routeParams.category;
+    if ( !$scope.category ) {
+        $scope.category = 'project';
+    }
     
-    $http.get('/rest/projects/category/project').success(function(data) {
+    $http.get('/rest/projects/category/' + $scope.category).success(function(data) {
         console.log( 'loaded projects:' + data.length );
         $scope.projects = data;
     });
@@ -32,7 +36,7 @@ function ProjectsCtrl($scope, $http) {
     };
 }
 
-ProjectsCtrl.$inject = ['$scope', '$http'];
+ProjectsCtrl.$inject = ['$scope', '$routeParams', '$http'];
 
 function ProjectDetailCtrl($scope, $routeParams, $http) {
     /* Update Facebook Comments Box */
@@ -54,7 +58,8 @@ ProjectDetailCtrl.$inject = ['$scope', '$routeParams', '$http'];
 
 function checkURL(value) { return /^(http...)/.test(value) }
 
-function NewLinkCtrl($scope, $http, $location, arg_reglink) {
+function NewLinkCtrl($scope, $http, $location, arg_reglink, $routeParams) {
+    console.log( 'newlink:' + $scope.newlink);
     $scope.newlink = arg_reglink.url;
     console.log( 'newlink:' + arg_reglink.url );
 
@@ -62,11 +67,15 @@ function NewLinkCtrl($scope, $http, $location, arg_reglink) {
     $scope.title = "";
     $scope.img = "/images/loading.gif";
 
+    $scope.category = $routeParams.category || 'project';
+    $scope.location_list = $routeParams.category ? '/cat/' + $scope.category : '/';
+
+
     if ( $scope.newlink && $scope.newlink.length > 0 && !checkURL($scope.newlink) ) {
         $scope.newlink = 'http://' + $scope.newlink;
     }
     $http.get('/verifylink?url=' + $scope.newlink).success(function(data) {
-        console.log( 'loaded projects:' + data.length );
+        console.log( 'loaded data:' + data.length );
         $scope.title = data.title;
         $scope.descr = data.descr;
         $scope.img = data.img;
@@ -97,14 +106,15 @@ function NewLinkCtrl($scope, $http, $location, arg_reglink) {
                 url: $scope.newlink,
                 thumbnailurl: $scope.img,
                 descr: $scope.descr,
-                category: 'project'
+                category: $scope.category
             };
 
             console.log( 'POST /rest/projects:'+ JSON.stringify( newLink) );
             $http.post('/rest/projects', newLink).success(function(data) {
 
                 /* Redirect to project list when it's done */
-                $location.path('/');
+
+                $location.path($scope.location_list);
             }).error(function(data, status) {
                 /* Failed saving with: status */
 
@@ -114,4 +124,4 @@ function NewLinkCtrl($scope, $http, $location, arg_reglink) {
 }
 
 
-NewLinkCtrl.$inject = ['$scope', '$http', '$location', 'arg_reglink'];
+NewLinkCtrl.$inject = ['$scope', '$http', '$location', 'arg_reglink', '$routeParams'];

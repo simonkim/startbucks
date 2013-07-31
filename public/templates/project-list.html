@@ -15,7 +15,7 @@
                 <label class="control-label" for="url"> Project URL </label>
                 <input ng-model="newlink" type="text" name="url"  id="url"
                 placeholder="Address to Project Site">{{ newlink | arg_reglink_url }}</input> 
-                <a class="btn" href="#/reglink">Submit</a>
+                <a class="btn" href="#/reglink/{{category}}">Submit</a>
             </fieldset>
         </form>
     </div>
